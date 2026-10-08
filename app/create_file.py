@@ -4,8 +4,13 @@ from datetime import datetime
 
 args = sys.argv
 
+
+def date() -> str:
+    return datetime.now().strftime("%Y-%m-%d %H:%M:%S\n")
+
+
 if "-d" in args and "-f" not in args:
-    path = "/".join(args[2:])
+    path = os.path.join(*args[2:])
     os.makedirs(path, exist_ok=True)
 
 elif "-f" in args and "-d" not in args:
@@ -13,8 +18,8 @@ elif "-f" in args and "-d" not in args:
     with open(args[2], "a") as file:
         if os.path.getsize(args[2]) != 0:
             file.write("\n")
-        current_date = datetime.now()
-        file.write(current_date.strftime("%Y-%m-%d %H:%M:%S\n"))  # data
+        current_date = date()
+        file.write(current_date)
         count = 0
         while text != "stop":
             count += 1
@@ -24,15 +29,15 @@ elif "-f" in args and "-d" not in args:
 elif "-d" in args and "-f" in args:
     d_index = args.index("-d")
     f_index = args.index("-f")
-    path = "/".join(args[d_index + 1:f_index])
-    os.makedirs(path)
+    path = os.path.join(*args[d_index + 1:f_index])
+    os.makedirs(path, exist_ok=True)
     text = input("Enter content line: ")
     full_path = os.path.join(path, args[f_index + 1])
     with open(full_path, "a") as file:
-        if os.path.getsize(args[f_index + 1]) != 0:
+        if os.path.getsize(full_path) != 0:
             file.write("\n")
-        current_date = datetime.now()
-        file.write(current_date.strftime("%Y-%m-%d %H:%M:%S\n"))  # data
+        current_date = date()
+        file.write(current_date)
         count = 0
         while text != "stop":
             count += 1

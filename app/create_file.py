@@ -5,7 +5,7 @@ from datetime import datetime
 args = sys.argv
 
 
-def date() -> str:
+def file_time() -> str:
     return datetime.now().strftime("%Y-%m-%d %H:%M:%S\n")
 
 
@@ -14,7 +14,7 @@ def write_to_file(file_path: str) -> None:
     with open(file_path, "a") as file:
         if os.path.getsize(file_path) != 0:
             file.write("\n")
-        current_date = date()
+        current_date = file_time()
         file.write(current_date)
         count = 0
         while text != "stop":

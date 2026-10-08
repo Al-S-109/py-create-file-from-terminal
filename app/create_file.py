@@ -6,7 +6,7 @@ args = sys.argv
 
 if "-d" in args and "-f" not in args:
     path = "/".join(args[2:])
-    os.makedirs(path)
+    os.makedirs(path, exist_ok=True)
 
 elif "-f" in args and "-d" not in args:
     text = input("Enter content line: ")
@@ -27,7 +27,8 @@ elif "-d" in args and "-f" in args:
     path = "/".join(args[d_index + 1:f_index])
     os.makedirs(path)
     text = input("Enter content line: ")
-    with open(args[f_index + 1], "a") as file:
+    full_path = os.path.join(path, args[f_index + 1])
+    with open(full_path, "a") as file:
         if os.path.getsize(args[f_index + 1]) != 0:
             file.write("\n")
         current_date = datetime.now()
@@ -37,5 +38,3 @@ elif "-d" in args and "-f" in args:
             count += 1
             file.write(f"{count} {text}\n")
             text = input("Enter content line: ")
-
-print(args)

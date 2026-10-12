@@ -35,7 +35,17 @@ elif "-f" in args and "-d" not in args:
 elif "-d" in args and "-f" in args:
     d_index = args.index("-d")
     f_index = args.index("-f")
-    path = os.path.join(*args[d_index + 1:f_index])
+
+    if d_index < f_index:
+        directories_path = args[d_index + 1:f_index]
+        file_name = args[f_index + 1]
+
+    elif d_index > f_index:
+        directories_path = args[d_index + 1:]
+        file_name = args[f_index + 1]
+
+    path = os.path.join(*directories_path)
     os.makedirs(path, exist_ok=True)
-    full_path = os.path.join(path, args[f_index + 1])
+
+    full_path = os.path.join(path, file_name)
     write_to_file(full_path)
